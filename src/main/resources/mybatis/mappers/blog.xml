@@ -32,7 +32,49 @@
 
 </select>
 
+<!-- 내블로그 관리 눌렀을때 기존글 가져오기-->
+<select id="selectBlogOne" parameterType="String" resultType="com.javaex.vo.BlogVo">
 
+	<![CDATA[
+					 select id,
+				        blogTitle,
+				        logoFile
+				 from blog
+				 where id= #{id}
+		]]>   
+
+
+</select>
+
+<!-- 내블로그 수정하기(로고파일이 있는경우)-->
+<update id="updateBlog" parameterType="com.javaex.vo.BlogVo" >
+
+	<![CDATA[
+	
+	 	update blog
+		set blogTitle =#{blogTitle},
+		    logoFile =#{logoFile}
+		where id= #{id}
+		
+		]]>   
+
+
+</update>
+
+<!-- 내블로그 수정하기(로고파일이 없는경우)-->
+<update id="updateBlog2" parameterType="com.javaex.vo.BlogVo" >
+
+	<![CDATA[
+	
+	 	update blog
+		set blogTitle =#{blogTitle}
+		   
+		where id= #{id}
+		
+		]]>   
+
+
+</update>
 
 
 

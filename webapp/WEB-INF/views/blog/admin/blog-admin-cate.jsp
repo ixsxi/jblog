@@ -7,20 +7,22 @@
 <meta charset="UTF-8">
 <title>JBlog</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
+<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script>
 </head>
 
 <body>
 	<div id="wrap">
 		
 		<!-- 개인블로그 해더 -->
-
+	<c:import url="/WEB-INF/views/includes/blog-header.jsp"></c:import>
 
 		<div id="content">
 			<ul id="admin-menu" class="clearfix">
-				<li class="tabbtn selected"><a href="">기본설정</a></li>
-				<li class="tabbtn"><a href="">카테고리</a></li>
+				<li class="tabbtn "><a href="${pageContext.request.contextPath}/${id}/admin/basic">기본설정</a></li>
+				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${id}/admin/category">카테고리</a></li>
 				<li class="tabbtn"><a href="">글작성</a></li>
 			</ul>
 			<!-- //admin-menu -->
@@ -94,14 +96,55 @@
 		
 		
 		<!-- 개인블로그 푸터 -->
-		
+		<c:import url="/WEB-INF/views/includes/blog-footer.jsp"></c:import>
 	
 	
 	</div>
 	<!-- //wrap -->
 </body>
 
+<script type="text/javascript">
 
+//카테고리 추가 눌렀을때
+$("#btnAddCate").on("click", function(){
+	console.log("카테고리 추가클릭");
+	
+	
+	//vo로 데이터 보내려고설정
+	
+	
+	//ajax요청하는법
+	   $.ajax({
+			
+			url : "${pageContext.request.contextPath }/api/guestbook/list",		
+			type : "post",
+			//contentType : "application/json",
+			//data : {name: ”홍길동"},
+
+			//dataType : "json",
+			success : function(guestList){
+				/*성공시 처리해야될 코드 작성*/
+				console.log(guestList);
+				
+				//화면에 그리기
+				for(var i=0; i<guestList.length; i++){
+					render(guestList[i], "down");// 방명록 글 1개씩 추가
+				}
+				
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+	
+});
+
+
+
+
+
+</script>
 
 
 </html>
